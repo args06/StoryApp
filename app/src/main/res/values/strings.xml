@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Story App</string>
+    <string name="show_more">Show More</string>
+    <string name="show_less">Show Less</string>
+    <string name="choose_picture">Choose a Picture</string>
+    <string name="menu_setting">Setting</string>
+    <string name="menu_logout">Logout</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="register">Register</string>
+    <string name="name">Name</string>
+    <string name="form_empty_message">This field can\'t be empty!</string>
+    <string name="incorrect_email_format">Incorrect email format!</string>
+    <string name="incorrect_email_or_password">Incorrect email or password!</string>
+    <string name="email_already_used">The email has been used!</string>
+    <string name="register_success">Register successfully</string>
+    <string name="login_success">Login successfully</string>
+    <string name="logout">Logout</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="caption">Caption</string>
+    <string name="upload">Upload</string>
+    <string name="change_app_language">Change App Language</string>
+
+    <string name="username_dummy">aargh06</string>
+    <string name="country_dummy">Indonesia</string>
+    <string name="date_dummy">June 26</string>
+    <string name="caption_dummy">Live is never flat</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="add_story">Add Story</string>
+    <string name="story_detail">Story Detail</string>
+</resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Story App</string>
+    <string name="show_more">Tampilkan Lebih</string>
+    <string name="show_less">Tampilkan Kurang</string>
+    <string name="choose_picture">Pilih Gambar</string>
+    <string name="menu_setting">Pengaturan</string>
+    <string name="menu_logout">Keluar</string>
+    <string name="dark_mode">Mode Gelap</string>
+    <string name="email">E-mail</string>
+    <string name="password">Kata Sandi</string>
+    <string name="login">Masuk</string>
+    <string name="don_t_have_an_account">Tidak memiliki akun?</string>
+    <string name="register">Daftar</string>
+    <string name="name">Nama</string>
+    <string name="form_empty_message">Kolom ini tidak boleh kosong!</string>
+    <string name="incorrect_email_format">Format email salah!</string>
+    <string name="incorrect_email_or_password">Email atau kata sandi salah!</string>
+    <string name="email_already_used">Email telah digunakan!</string>
+    <string name="register_success">Berhasil mendaftar</string>
+    <string name="login_success">Berhasil masuk</string>
+    <string name="logout">Keluar</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="caption">Keterangan</string>
+    <string name="upload">Unggah</string>
+    <string name="change_app_language">Ganti Bahasa Aplikasi</string>
+    <string name="username_dummy">aargh06</string>
+    <string name="country_dummy">Indonesia</string>
+    <string name="date_dummy">June 26</string>
+    <string name="caption_dummy">Hidup tidak pernah datar</string>
+    <string name="dashboard">Dasbor</string>
+    <string name="add_story">Tambahkan Cerita</string>
+    <string name="story_detail">Detail Cerita</string>
+</resources>

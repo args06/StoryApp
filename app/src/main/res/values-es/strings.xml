@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Story App</string>
+    <string name="show_more">Ver más</string>
+    <string name="show_less">Mostrar menos</string>
+    <string name="choose_picture">Elija una imagen</string>
+    <string name="menu_setting">Configuración</string>
+    <string name="menu_logout">Cierre de sesión</string>
+    <string name="dark_mode">Modo oscuro</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Inicio de sesión</string>
+    <string name="don_t_have_an_account">¿No tiene cuenta?</string>
+    <string name="register">Regístrese en</string>
+    <string name="name">Nombre</string>
+    <string name="form_empty_message">Este campo no puede estar vacío.</string>
+    <string name="incorrect_email_format">Formato de correo electrónico incorrecto</string>
+    <string name="incorrect_email_or_password">Correo electrónico o contraseña incorrectos</string>
+    <string name="email_already_used">El correo electrónico ha sido utilizado.</string>
+    <string name="register_success">Registrarse correctamente</string>
+    <string name="login_success">Iniciar sesión correctamente</string>
+    <string name="logout">Cierre de sesión</string>
+    <string name="camera">Cámara</string>
+    <string name="gallery">Galería</string>
+    <string name="caption">Leyenda</string>
+    <string name="upload">Cargar</string>
+    <string name="change_app_language">Cambiar el idioma de la aplicación</string>
+    <string name="username_dummy">aargh06</string>
+    <string name="country_dummy">Indonesia</string>
+    <string name="date_dummy">26 de junio</string>
+    <string name="caption_dummy">La vida nunca es plana</string>
+    <string name="dashboard">Cuadro de mandos</string>
+    <string name="add_story">Añadir historia</string>
+    <string name="story_detail">Detalle de la historia</string>
+</resources>
