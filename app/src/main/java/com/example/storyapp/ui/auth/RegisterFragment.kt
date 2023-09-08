@@ -57,6 +57,9 @@ class RegisterFragment : Fragment() {
         if (password.isEmpty()) {
             isError = true
             binding.etPassword.error = getString(R.string.form_empty_message)
+        }  else if (!FormValidation.isPasswordValid(password)) {
+            isError = true
+            binding.etPassword.error = getString(R.string.incorrect_password_length)
         }
 
         if (!isError) {

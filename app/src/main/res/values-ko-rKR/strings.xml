@@ -32,4 +32,5 @@
     <string name="dashboard">대시보드</string>
     <string name="add_story">스토리 추가</string>
     <string name="story_detail">스토리 세부 정보</string>
+    <string name="incorrect_password_length">비밀번호는 8자 이상이어야 합니다!</string>
 </resources>

@@ -1,3 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Story App</string>
+    <string name="show_more">Afficher plus</string>
+    <string name="show_less">Montrer moins</string>
+    <string name="choose_picture">Choisir une image</string>
+    <string name="menu_setting">Paramètres</string>
+    <string name="menu_logout">Déconnexion</string>
+    <string name="dark_mode">Mode sombre</string>
+    <string name="email">Courrier électronique</string>
+    <string name="password">Mot de passe</string>
+    <string name="login">Connexion</string>
+    <string name="don_t_have_an_account">Vous n\'avez pas de compte ?</string>
+    <string name="register">Registre</string>
+    <string name="name">Nom</string>
+    <string name="form_empty_message">Ce champ ne peut pas être vide!</string>
+    <string name="incorrect_email_format">Format d\'e-mail incorrect!</string>
+    <string name="incorrect_email_or_password">E-mail ou mot de passe incorrect!</string>
+    <string name="email_already_used">L\'e-mail a été utilisé!</string>
+    <string name="register_success">S\'inscrire avec succès</string>
+    <string name="login_success">Connexion réussie</string>
+    <string name="logout">Déconnexion</string>
+    <string name="camera">Appareil photo</string>
+    <string name="gallery">Galerie</string>
+    <string name="caption">Légende</string>
+    <string name="upload">Télécharger</string>
+    <string name="change_app_language">Changer la langue de l\'application</string>
+    <string name="username_dummy">aargh06</string>
+    <string name="country_dummy">Indonesia</string>
+    <string name="date_dummy">Le 26 juin</string>
+    <string name="caption_dummy">La vie n\'est jamais plate</string>
+    <string name="dashboard">Tableau de bord</string>
+    <string name="add_story">Ajouter un article</string>
+    <string name="story_detail">Détail de l\'histoire</string>
+    <string name="incorrect_password_length">Le mot de passe doit comporter au moins 8 caractères!</string>
 </resources>

@@ -32,4 +32,5 @@
     <string name="dashboard">Dasbor</string>
     <string name="add_story">Tambahkan Cerita</string>
     <string name="story_detail">Detail Cerita</string>
+    <string name="incorrect_password_length">Kata sandi minimal harus terdiri dari 8 karakter!</string>
 </resources>
