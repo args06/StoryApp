@@ -1,10 +1,13 @@
 package com.example.storyapp.ui.auth
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.storyapp.R
@@ -21,10 +24,8 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AuthViewModel by viewModels()
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
@@ -43,34 +44,24 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkLogin() {
-        var isError = false
+        if (checkFormError())
+            loginProcess()
+    }
+
+    private fun checkFormError(): Boolean {
+        return binding.etEmail.error == null
+                && binding.etPassword.error == null
+                && binding.etEmail.text.toString().isNotEmpty()
+                && binding.etPassword.text.toString().isNotEmpty()
+    }
+
+    private fun loginProcess() {
         val email = binding.etEmail.text.toString().lowercase().trim()
         val password = binding.etPassword.text.toString().trim()
 
-        if (email.isEmpty()) {
-            isError = true
-            binding.etEmail.error = getString(R.string.form_empty_message)
-        } else if (!FormValidation.isEmailValid(email)) {
-            isError = true
-            binding.etEmail.error = getString(R.string.incorrect_email_format)
-        }
-
-        if (password.isEmpty()) {
-            isError = true
-            binding.etPassword.error = getString(R.string.form_empty_message)
-        }
-
-        if (!isError) {
-            loginProcess(email, password)
-        }
-    }
-
-    private fun loginProcess(
-        email: String, password: String
-    ) {
         viewModel.loginProcess(email, password).observe(viewLifecycleOwner) { result ->
             if (result != null) {
-                when(result) {
+                when (result) {
                     is Results.Loading -> showLoading(true)
                     is Results.Success -> {
                         showLoading(false)
@@ -82,11 +73,14 @@ class LoginFragment : Fragment() {
                             requireActivity().finish()
                         }
                     }
+
                     is Results.Error -> {
-                        if (result.error == Constant.API_ERROR_UNAUTHORIZED)
-                            showSnackBar(getString(R.string.incorrect_email_or_password))
-                        else
-                            showSnackBar(result.error)
+                        if (result.error == Constant.API_ERROR_UNAUTHORIZED) showSnackBar(
+                            getString(
+                                R.string.incorrect_email_or_password
+                            )
+                        )
+                        else showSnackBar(result.error)
                         showLoading(false)
                     }
                 }

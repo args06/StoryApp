@@ -38,38 +38,25 @@ class RegisterFragment : Fragment() {
     }
 
     private fun checkRegister() {
-        var isError = false
+        if (checkFormError()) {
+            registerProcess()
+        }
+    }
+
+    private fun checkFormError(): Boolean {
+        return binding.etName.error == null
+                && binding.etEmail.error == null
+                && binding.etPassword.error == null
+                && binding.etName.text.toString().isNotEmpty()
+                && binding.etEmail.text.toString().isNotEmpty()
+                && binding.etPassword.text.toString().isNotEmpty()
+    }
+
+    private fun registerProcess() {
         val name = binding.etName.text.toString().trim()
         val email = binding.etEmail.text.toString().lowercase().trim()
         val password = binding.etPassword.text.toString().trim()
 
-        if (name.isEmpty()) {
-            isError = true
-            binding.etName.error = getString(R.string.form_empty_message)
-        }
-        if (email.isEmpty()) {
-            isError = true
-            binding.etEmail.error = getString(R.string.form_empty_message)
-        } else if (!FormValidation.isEmailValid(email)) {
-            isError = true
-            binding.etEmail.error = getString(R.string.incorrect_email_format)
-        }
-        if (password.isEmpty()) {
-            isError = true
-            binding.etPassword.error = getString(R.string.form_empty_message)
-        }  else if (!FormValidation.isPasswordValid(password)) {
-            isError = true
-            binding.etPassword.error = getString(R.string.incorrect_password_length)
-        }
-
-        if (!isError) {
-            registerProcess(name, email, password)
-        }
-    }
-
-    private fun registerProcess(
-        name: String, email: String, password: String
-    ) {
         viewModel.registerProcess(name, email, password).observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 when(result) {
@@ -87,7 +74,6 @@ class RegisterFragment : Fragment() {
                         else
                             showSnackBar(result.error)
                         showLoading(false)
-
                     }
                 }
             }

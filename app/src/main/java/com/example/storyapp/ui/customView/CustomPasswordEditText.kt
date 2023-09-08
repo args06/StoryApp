@@ -8,14 +8,16 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.example.storyapp.R
+import com.example.storyapp.utils.FormValidation
 import com.google.android.material.textfield.TextInputEditText
 
-class MyEditText : TextInputEditText, View.OnTouchListener {
+class CustomPasswordEditText : TextInputEditText, View.OnTouchListener {
 
     private lateinit var clearButtonImage: Drawable
+    private var isPasswordLengthError = false
+    private var isPasswordBlank = false
 
     constructor(context: Context) : super(context) {
         init()
@@ -30,6 +32,10 @@ class MyEditText : TextInputEditText, View.OnTouchListener {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
+        if (isPasswordLengthError)
+            error = context.getString(R.string.incorrect_password_length)
+        if (isPasswordBlank)
+            error = context.getString(R.string.form_empty_message)
     }
 
     private fun init() {
@@ -37,14 +43,20 @@ class MyEditText : TextInputEditText, View.OnTouchListener {
         setOnTouchListener(this)
 
         addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-                // Do nothing.
-            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.toString().isNotEmpty()) showClearButton() else hideClearButton()
+                val password = s.toString().trim()
+                if (password.isNotEmpty()){
+                    showClearButton()
+                    isPasswordLengthError = !FormValidation.isPasswordValid(password)
+                } else {
+                    hideClearButton()
+                    isPasswordBlank = password.isEmpty()
+                }
             }
             override fun afterTextChanged(s: Editable) {
-                // Do nothing.
+                val password = s.toString().trim()
+                isPasswordBlank = password.isEmpty()
             }
         })
     }
