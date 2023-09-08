@@ -19,6 +19,8 @@ class CustomPasswordEditText : TextInputEditText, View.OnTouchListener {
     private var isPasswordLengthError = false
     private var isPasswordBlank = false
 
+    var isFormValid = false
+
     constructor(context: Context) : super(context) {
         init()
     }
@@ -32,10 +34,6 @@ class CustomPasswordEditText : TextInputEditText, View.OnTouchListener {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-        if (isPasswordLengthError)
-            error = context.getString(R.string.incorrect_password_length)
-        if (isPasswordBlank)
-            error = context.getString(R.string.form_empty_message)
     }
 
     private fun init() {
@@ -46,18 +44,27 @@ class CustomPasswordEditText : TextInputEditText, View.OnTouchListener {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val password = s.toString().trim()
+
                 if (password.isNotEmpty()){
                     showClearButton()
                     isPasswordLengthError = !FormValidation.isPasswordValid(password)
+                    isPasswordBlank = false
                 } else {
                     hideClearButton()
-                    isPasswordBlank = password.isEmpty()
+                    isPasswordBlank = true
+                    isPasswordLengthError = false
                 }
+
+                isFormValid = !isPasswordLengthError && !isPasswordBlank
+
+                error = if (isPasswordLengthError)
+                    context.getString(R.string.incorrect_password_length)
+                else if (isPasswordBlank)
+                    context.getString(R.string.form_empty_message)
+                else
+                    null
             }
-            override fun afterTextChanged(s: Editable) {
-                val password = s.toString().trim()
-                isPasswordBlank = password.isEmpty()
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 

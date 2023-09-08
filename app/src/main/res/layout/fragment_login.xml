@@ -25,14 +25,16 @@
             app:lottie_rawRes="@raw/auth_animation" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout"
+            android:id="@+id/til_email"
             style="@style/CustomTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_28dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_logo">
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo"
+            android:alpha="0"
+            tools:alpha="100">
 
             <com.example.storyapp.ui.customView.CustomEmailEditText
                 android:id="@+id/et_email"
@@ -43,14 +45,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
+            android:id="@+id/til_password"
             style="@style/CustomTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/til_email"
+            android:alpha="0"
+            tools:alpha="100">
 
             <com.example.storyapp.ui.customView.CustomPasswordEditText
                 android:id="@+id/et_password"
@@ -69,7 +73,10 @@
             android:text="@string/login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"/>
+            app:layout_constraintTop_toBottomOf="@+id/til_password"
+            android:alpha="0"
+            tools:alpha="100"
+            android:enabled="false"/>
 
         <LinearLayout
             android:id="@+id/ll_register"
@@ -78,7 +85,9 @@
             android:layout_marginTop="@dimen/space_8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login">
+            app:layout_constraintTop_toBottomOf="@+id/btn_login"
+            android:alpha="0"
+            tools:alpha="100">
 
             <TextView
                 android:layout_width="wrap_content"

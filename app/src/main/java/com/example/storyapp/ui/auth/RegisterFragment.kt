@@ -1,6 +1,10 @@
 package com.example.storyapp.ui.auth
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +15,6 @@ import com.example.storyapp.R
 import com.example.storyapp.data.Results
 import com.example.storyapp.databinding.FragmentRegisterBinding
 import com.example.storyapp.utils.Constant
-import com.example.storyapp.utils.FormValidation
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,8 +25,7 @@ class RegisterFragment : Fragment() {
     private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
@@ -31,25 +33,62 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        playAnimation()
+        checkRegister()
 
         binding.btnRegister.setOnClickListener {
-            checkRegister()
-        }
-    }
-
-    private fun checkRegister() {
-        if (checkFormError()) {
             registerProcess()
         }
     }
 
-    private fun checkFormError(): Boolean {
-        return binding.etName.error == null
-                && binding.etEmail.error == null
-                && binding.etPassword.error == null
-                && binding.etName.text.toString().isNotEmpty()
-                && binding.etEmail.text.toString().isNotEmpty()
-                && binding.etPassword.text.toString().isNotEmpty()
+    private fun checkRegister() {
+        checkNameStatus()
+        checkEmailStatus()
+        checkPasswordStatus()
+    }
+
+    private fun checkNameStatus() {
+        binding.etName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setButtonEnabled()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+
+        })
+    }
+
+    private fun checkEmailStatus() {
+        binding.etEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setButtonEnabled()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+
+        })
+    }
+
+    private fun checkPasswordStatus() {
+        binding.etPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setButtonEnabled()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+
+        })
+    }
+
+    private fun setButtonEnabled() {
+        binding.btnRegister.isEnabled =
+            binding.etEmail.isFormValid && binding.etPassword.isFormValid && !binding.etName.isTextBlank
     }
 
     private fun registerProcess() {
@@ -59,7 +98,7 @@ class RegisterFragment : Fragment() {
 
         viewModel.registerProcess(name, email, password).observe(viewLifecycleOwner) { result ->
             if (result != null) {
-                when(result) {
+                when (result) {
                     is Results.Loading -> showLoading(true)
                     is Results.Success -> {
                         showLoading(false)
@@ -68,11 +107,10 @@ class RegisterFragment : Fragment() {
                             findNavController().popBackStack()
                         }
                     }
+
                     is Results.Error -> {
-                        if (result.error == Constant.API_ERROR_BAD_REQUEST)
-                            showSnackBar(getString(R.string.email_already_used))
-                        else
-                            showSnackBar(result.error)
+                        if (result.error == Constant.API_ERROR_BAD_REQUEST) showSnackBar(getString(R.string.email_already_used))
+                        else showSnackBar(result.error)
                         showLoading(false)
                     }
                 }
@@ -90,6 +128,30 @@ class RegisterFragment : Fragment() {
 
     private fun showSnackBar(message: String) {
         Snackbar.make(binding.scrollLayout, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val nameEditTextLayout =
+            ObjectAnimator.ofFloat(binding.tilName, View.ALPHA, 1f).setDuration(500)
+        val emailEditTextLayout =
+            ObjectAnimator.ofFloat(binding.tilEmail, View.ALPHA, 1f).setDuration(500)
+        val passwordEditTextLayout =
+            ObjectAnimator.ofFloat(binding.tilPassword, View.ALPHA, 1f).setDuration(500)
+        val registerButton =
+            ObjectAnimator.ofFloat(binding.btnRegister, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(
+                nameEditTextLayout, emailEditTextLayout, passwordEditTextLayout, registerButton
+            )
+            startDelay = 500
+        }.start()
     }
 
     override fun onDestroy() {

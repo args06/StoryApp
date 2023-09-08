@@ -1,5 +1,7 @@
 package com.example.storyapp.ui.auth
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,7 +16,6 @@ import com.example.storyapp.R
 import com.example.storyapp.data.Results
 import com.example.storyapp.databinding.FragmentLoginBinding
 import com.example.storyapp.utils.Constant
-import com.example.storyapp.utils.FormValidation
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,9 +34,11 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        playAnimation()
+        checkLogin()
 
         binding.btnLogin.setOnClickListener {
-            checkLogin()
+            loginProcess()
         }
 
         binding.btnRegister.setOnClickListener {
@@ -44,15 +47,38 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkLogin() {
-        if (checkFormError())
-            loginProcess()
+        checkEmailStatus()
+        checkPasswordStatus()
     }
 
-    private fun checkFormError(): Boolean {
-        return binding.etEmail.error == null
-                && binding.etPassword.error == null
-                && binding.etEmail.text.toString().isNotEmpty()
-                && binding.etPassword.text.toString().isNotEmpty()
+    private fun checkEmailStatus() {
+        binding.etEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setButtonEnabled()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun checkPasswordStatus() {
+        binding.etPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                setButtonEnabled()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
+    }
+    private fun setButtonEnabled() {
+        binding.btnLogin.isEnabled = binding.etEmail.isFormValid && binding.etPassword.isFormValid
     }
 
     private fun loginProcess() {
@@ -98,6 +124,29 @@ class LoginFragment : Fragment() {
 
     private fun showSnackBar(message: String) {
         Snackbar.make(binding.scrollLayout, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.ivLogo, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val emailEditTextLayout = ObjectAnimator.ofFloat(binding.tilEmail, View.ALPHA, 1f).setDuration(500)
+        val passwordEditTextLayout = ObjectAnimator.ofFloat(binding.tilPassword, View.ALPHA, 1f).setDuration(500)
+        val loginButton = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(500)
+        val registerButton = ObjectAnimator.ofFloat(binding.llRegister, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(
+                emailEditTextLayout,
+                passwordEditTextLayout,
+                loginButton,
+                registerButton
+            )
+            startDelay = 500
+        }.start()
     }
 
     override fun onDestroy() {

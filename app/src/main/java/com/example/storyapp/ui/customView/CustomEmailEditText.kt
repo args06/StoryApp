@@ -15,6 +15,8 @@ class CustomEmailEditText: TextInputEditText{
     private var isEmailNotValid = false
     private var isEmailBlank = false
 
+    var isFormValid = false
+
     constructor(context: Context) : super(context) {
         init()
     }
@@ -28,10 +30,6 @@ class CustomEmailEditText: TextInputEditText{
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-        if (isEmailNotValid)
-            error = context.getString(R.string.incorrect_email_format)
-        if (isEmailBlank)
-            error = context.getString(R.string.form_empty_message)
     }
 
     private fun init() {
@@ -41,14 +39,22 @@ class CustomEmailEditText: TextInputEditText{
                 val email = s.toString().trim()
                 if (email.isNotEmpty()){
                     isEmailNotValid = !FormValidation.isEmailValid(email)
+                    isEmailBlank = false
                 } else {
                     isEmailBlank = email.isEmpty()
+                    isEmailNotValid = false
                 }
+
+                isFormValid = !isEmailNotValid && !isEmailBlank
+
+                error = if (isEmailNotValid)
+                    context.getString(R.string.incorrect_email_format)
+                else if (isEmailBlank)
+                    context.getString(R.string.form_empty_message)
+                else
+                    null
             }
-            override fun afterTextChanged(s: Editable) {
-                val email = s.toString().trim()
-                isEmailBlank = email.isEmpty()
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 }

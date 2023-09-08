@@ -7,12 +7,11 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import com.example.storyapp.R
-import com.example.storyapp.utils.FormValidation
 import com.google.android.material.textfield.TextInputEditText
 
 class CustomEditText: TextInputEditText {
 
-    private var isTextBlank = false
+    var isTextBlank = false
 
     constructor(context: Context) : super(context) {
         init()
@@ -27,23 +26,21 @@ class CustomEditText: TextInputEditText {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
-        if (isTextBlank)
-            error = context.getString(R.string.form_empty_message)
     }
 
     private fun init() {
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                val email = s.toString().trim()
-                if (email.isEmpty()){
-                    isTextBlank = email.isEmpty()
-                }
+                val text = s.toString().trim()
+                isTextBlank = text.isEmpty()
+
+                error = if (isTextBlank)
+                    context.getString(R.string.form_empty_message)
+                else
+                    null
             }
-            override fun afterTextChanged(s: Editable) {
-                val email = s.toString().trim()
-                isTextBlank = email.isEmpty()
-            }
+            override fun afterTextChanged(s: Editable) {}
         })
     }
 }
