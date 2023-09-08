@@ -50,11 +50,11 @@ class LoginFragment : Fragment() {
         if (email.isEmpty()) {
             isError = true
             binding.etEmail.error = getString(R.string.form_empty_message)
-        }
-        if (!FormValidation.isEmailValid(email)) {
+        } else if (!FormValidation.isEmailValid(email)) {
             isError = true
             binding.etEmail.error = getString(R.string.incorrect_email_format)
         }
+
         if (password.isEmpty()) {
             isError = true
             binding.etPassword.error = getString(R.string.form_empty_message)
