@@ -23,9 +23,8 @@
         <ImageView
             android:id="@+id/iv_story_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/space_400dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
-            android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars"
             app:layout_constraintTop_toBottomOf="@+id/tv_username_top" />
 
@@ -73,7 +72,7 @@
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_4dp"
+            android:layout_marginVertical="@dimen/space_4dp"
             android:textSize="@dimen/text_12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/tv_caption"

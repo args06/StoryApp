@@ -31,6 +31,7 @@ class StoryAdapter : ListAdapter<Story, StoryAdapter.ViewHolder>(DIFF_CALLBACK) 
         RecyclerView.ViewHolder(binding.root) {
         fun bind(storyItem: Story) {
             binding.apply {
+                ivStoryImage.layout(0,0,0,0)
                 Glide.with(itemView.context).load(storyItem.photoUrl).into(ivStoryImage)
                 tvUsername.text = storyItem.name
                 tvDate.text = Helper.convertDateTime(storyItem.createdAt)
