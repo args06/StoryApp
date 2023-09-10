@@ -1,11 +1,18 @@
-package com.example.storyapp.data
+package com.example.storyapp.data.process
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.example.storyapp.data.Results
 import com.example.storyapp.data.preferences.AppPreferences
 import com.example.storyapp.data.remote.service.StoryAPI
-import com.example.storyapp.domain.model.Story
+import com.example.storyapp.data.local.entity.StoryEntity
+import com.example.storyapp.data.local.service.StoryDatabase
 import com.example.storyapp.domain.model.User
 import com.example.storyapp.domain.repository.StoryRepository
 import com.example.storyapp.utils.Mapping
@@ -15,7 +22,9 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 class StoryRepositoryImpl @Inject constructor(
-    private val apiService: StoryAPI, private val pref: AppPreferences
+    private val apiService: StoryAPI,
+    private val pref: AppPreferences,
+    private val storyDatabase: StoryDatabase
 ) : StoryRepository {
 
     override fun loginProcess(email: String, password: String): LiveData<Results<Boolean>> =
@@ -50,17 +59,27 @@ class StoryRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getStories(token: String): LiveData<Results<List<Story>>> = liveData {
-        emit(Results.Loading)
-        try {
-            val response = apiService.getStories(token)
-            if (response.listStory != null) {
-                val listStory = Mapping.storyMapping(response.listStory)
-                emit(Results.Success(listStory))
-            }
-        } catch (e: Exception) {
-            emit(Results.Error((e as HttpException).code().toString()))
-        }
+//    override fun getStories(token: String): LiveData<Results<List<StoryEntity>>> = liveData {
+//        emit(Results.Loading)
+//        try {
+//            val response = apiService.getStories(token)
+//            if (response.listStory != null) {
+//                val listStory = Mapping.storyMapping(response.listStory)
+//                emit(Results.Success(listStory))
+//            }
+//        } catch (e: Exception) {
+//            emit(Results.Error((e as HttpException).code().toString()))
+//        }
+//    }
+
+    override fun getStories(token: String): LiveData<PagingData<StoryEntity>> {
+        @OptIn(ExperimentalPagingApi::class) return Pager(config = PagingConfig(
+            pageSize = 5
+        ), remoteMediator = StoryRemoteMediator(
+            storyAPI = apiService, storyDatabase = storyDatabase, authToken = token
+        ), pagingSourceFactory = {
+            storyDatabase.storyDao().getAllStory()
+        }).liveData
     }
 
     override fun uploadImage(token: String, image: MultipartBody.Part, caption: RequestBody) =

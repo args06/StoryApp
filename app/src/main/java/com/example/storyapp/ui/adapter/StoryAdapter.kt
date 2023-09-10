@@ -1,41 +1,44 @@
-package com.example.storyapp.ui.dashboard
+package com.example.storyapp.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.storyapp.R
 import com.example.storyapp.databinding.StoryItemBinding
-import com.example.storyapp.domain.model.Story
+import com.example.storyapp.data.local.entity.StoryEntity
+import com.example.storyapp.ui.dashboard.DashboardFragmentDirections
 import com.example.storyapp.utils.Constant
 import com.example.storyapp.utils.Helper
 
-class StoryAdapter : ListAdapter<Story, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
+class StoryAdapter : PagingDataAdapter<StoryEntity, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = StoryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: StoryAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val storyItem = getItem(position)
-        holder.bind(storyItem)
+        if (storyItem != null) {
+            holder.bind(storyItem)
+        }
     }
 
     class ViewHolder(private var binding: StoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(storyItem: Story) {
+        fun bind(storyEntityItem: StoryEntity) {
             binding.apply {
                 ivStoryImage.layout(0, 0, 0, 0)
-                Glide.with(itemView.context).load(storyItem.photoUrl).into(ivStoryImage)
-                tvUsername.text = storyItem.name
-                tvDate.text = Helper.convertDateTime(storyItem.createdAt)
-                tvCaption.text = storyItem.description
+                Glide.with(itemView.context).load(storyEntityItem.photoUrl).into(ivStoryImage)
+                tvUsername.text = storyEntityItem.name
+                tvDate.text = Helper.convertDateTime(storyEntityItem.createdAt)
+                tvCaption.text = storyEntityItem.description
 
                 tvCaption.post {
                     val lineCount = tvCaption.lineCount
@@ -60,7 +63,7 @@ class StoryAdapter : ListAdapter<Story, StoryAdapter.ViewHolder>(DIFF_CALLBACK) 
                 cvStoryItem.setOnClickListener {
                     val toDetailFragment =
                         DashboardFragmentDirections.actionDashboardFragmentToDetailFragment(
-                            storyItem
+                            storyEntityItem
                         )
                     itemView.findNavController().navigate(toDetailFragment)
                 }
@@ -69,16 +72,16 @@ class StoryAdapter : ListAdapter<Story, StoryAdapter.ViewHolder>(DIFF_CALLBACK) 
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<Story> = object : DiffUtil.ItemCallback<Story>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<StoryEntity> = object : DiffUtil.ItemCallback<StoryEntity>() {
             override fun areItemsTheSame(
-                oldItem: Story, newItem: Story
+                oldItem: StoryEntity, newItem: StoryEntity
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(
-                oldItem: Story, newItem: Story
+                oldItem: StoryEntity, newItem: StoryEntity
             ): Boolean {
                 return oldItem == newItem
             }

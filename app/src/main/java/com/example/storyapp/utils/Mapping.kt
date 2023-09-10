@@ -4,7 +4,7 @@ import com.example.storyapp.data.remote.response.AuthResponse
 import com.example.storyapp.data.remote.response.ListStoryItem
 import com.example.storyapp.data.remote.response.LoginResult
 import com.example.storyapp.domain.model.AuthStatus
-import com.example.storyapp.domain.model.Story
+import com.example.storyapp.data.local.entity.StoryEntity
 import com.example.storyapp.domain.model.User
 
 object Mapping {
@@ -17,8 +17,8 @@ object Mapping {
         isError = item.error, message = item.message
     )
 
-    fun storyMapping(item: List<ListStoryItem>): List<Story> = item.map { storyData ->
-        Story(
+    fun storyMapping(item: List<ListStoryItem>): List<StoryEntity> = item.map { storyData ->
+        StoryEntity(
             id = storyData.id,
             name = storyData.name,
             description = storyData.description,

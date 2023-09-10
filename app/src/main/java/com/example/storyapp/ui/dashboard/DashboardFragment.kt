@@ -9,8 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.storyapp.R
-import com.example.storyapp.data.Results
 import com.example.storyapp.databinding.FragmentDashboardBinding
+import com.example.storyapp.ui.adapter.LoadingStateAdapter
+import com.example.storyapp.ui.adapter.StoryAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,51 +47,33 @@ class DashboardFragment : Fragment() {
 
     private fun getStories(token: String) {
         val storyAdapter = StoryAdapter()
+
         viewModel.getStories(token).observe(viewLifecycleOwner) { storiesData ->
-            if (storiesData != null) {
-                when (storiesData) {
-                    is Results.Loading -> {
-                        showLoading(true)
-                    }
+            storyAdapter.submitData(lifecycle, storiesData)
+        }
 
-                    is Results.Success -> {
-                        showLoading(false)
-                        val data = storiesData.data
-                        if (data.isNotEmpty()) {
-                            storyAdapter.submitList(data)
-                        } else {
-                            showNoData()
-                        }
-                    }
-
-                    is Results.Error -> {
-                        showLoading(false)
-                        showSnackBar(storiesData.error)
-                    }
-                }
-            }
+        storyAdapter.addLoadStateListener { loadState ->
+            if (loadState.append.endOfPaginationReached)
+                if (storyAdapter.itemCount < 1)
+                    showNoData(true)
+                else
+                    showNoData(false)
         }
 
         binding.rvStoryList.apply {
             layoutManager = StaggeredGridLayoutManager(1, 1)
-            adapter = storyAdapter
+            adapter = storyAdapter.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    storyAdapter.retry()
+                }
+            )
             setHasFixedSize(true)
         }
     }
 
-    private fun showNoData() {
-        binding.ivNoData.visibility = View.VISIBLE
-        binding.ivLoading.visibility = View.GONE
-        binding.rvStoryList.visibility = View.GONE
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.ivLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.ivNoData.visibility = View.GONE
-    }
-
-    private fun showSnackBar(message: String) {
-        Snackbar.make(binding.constraintLayout, message, Snackbar.LENGTH_SHORT).show()
+    private fun showNoData(isNoData: Boolean) {
+        binding.ivNoData.visibility = if (isNoData) View.VISIBLE else View.GONE
+        binding.rvStoryList.visibility = if (isNoData) View.GONE else View.VISIBLE
     }
 
     override fun onDestroy() {

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.storyapp.databinding.FragmentDetailBinding
-import com.example.storyapp.domain.model.Story
+import com.example.storyapp.data.local.entity.StoryEntity
 import com.example.storyapp.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,7 +17,7 @@ class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var storyItem: Story
+    private lateinit var storyEntityItem: StoryEntity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -29,14 +29,14 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        storyItem = DetailFragmentArgs.fromBundle(arguments as Bundle).storyItem
+        storyEntityItem = DetailFragmentArgs.fromBundle(arguments as Bundle).storyItem
 
         binding.apply {
-            tvUsernameTop.text = storyItem.name
-            tvUsername.text = storyItem.name
-            Glide.with(this@DetailFragment).load(storyItem.photoUrl).into(ivStoryImage)
-            tvCaption.text = storyItem.description
-            tvDate.text = Helper.convertDateTime(storyItem.createdAt)
+            tvUsernameTop.text = storyEntityItem.name
+            tvUsername.text = storyEntityItem.name
+            Glide.with(this@DetailFragment).load(storyEntityItem.photoUrl).into(ivStoryImage)
+            tvCaption.text = storyEntityItem.description
+            tvDate.text = Helper.convertDateTime(storyEntityItem.createdAt)
         }
     }
 

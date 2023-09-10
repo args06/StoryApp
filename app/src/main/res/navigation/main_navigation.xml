@@ -58,7 +58,7 @@
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="story_item"
-            app:argType="com.example.storyapp.domain.model.Story" />
+            app:argType="com.example.storyapp.data.local.entity.StoryEntity" />
     </fragment>
     <activity
         android:id="@+id/mapsNavigation"

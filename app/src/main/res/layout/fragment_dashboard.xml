@@ -28,21 +28,6 @@
         android:contentDescription="@string/add_story" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/iv_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/space_100dp"
-        android:scaleX="3"
-        android:scaleY="3"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading_animation" />
-
-    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/iv_no_data"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_200dp"

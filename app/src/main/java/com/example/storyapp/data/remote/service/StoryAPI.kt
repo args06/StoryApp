@@ -12,6 +12,7 @@ import retrofit2.http.Header
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface StoryAPI {
 
@@ -30,9 +31,11 @@ interface StoryAPI {
         @Field("password") password: String
     ): AuthResponse
 
-    @GET("stories?size=${Constant.MAX_RESPONSE_SIZE}")
+    @GET("stories")
     suspend fun getStories(
-        @Header("Authorization") auth: String
+        @Header("Authorization") auth: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
     ): RetrieveResponse
 
     @Multipart

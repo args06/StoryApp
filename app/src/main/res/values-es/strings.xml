@@ -36,4 +36,5 @@
     <string name="image_story">Imágenes de la historia</string>
     <string name="images_preview">Avance de imágenes</string>
     <string name="menu_maps">Mapas</string>
+    <string name="retry">Reintentar</string>
 </resources>

@@ -5,8 +5,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import androidx.room.Room
 import com.example.storyapp.BuildConfig
-import com.example.storyapp.data.StoryRepositoryImpl
+import com.example.storyapp.data.process.StoryRepositoryImpl
+import com.example.storyapp.data.local.service.StoryDatabase
 import com.example.storyapp.data.preferences.AppPreferences
 import com.example.storyapp.data.remote.service.StoryAPI
 import com.example.storyapp.domain.repository.StoryRepository
@@ -66,7 +68,7 @@ object MyModule {
 
     @Provides
     @Singleton
-    fun provideDisasterApi(retrofit: Retrofit): StoryAPI {
+    fun provideStoryApi(retrofit: Retrofit): StoryAPI {
         return retrofit.create(StoryAPI::class.java)
     }
 
@@ -83,8 +85,23 @@ object MyModule {
     @Provides
     @Singleton
     fun provideRepository(
-        storyAPI: StoryAPI, pref: AppPreferences
+        storyAPI: StoryAPI, pref: AppPreferences, storyDatabase: StoryDatabase
     ): StoryRepository {
-        return StoryRepositoryImpl(storyAPI, pref)
+        return StoryRepositoryImpl(storyAPI, pref, storyDatabase)
     }
+
+    @Provides
+    @Singleton
+    fun provideRoomDb(context: Context): StoryDatabase = Room.databaseBuilder(
+        context, StoryDatabase::class.java, Constant.DATABASE_NAME
+    ).fallbackToDestructiveMigration().build()
+
+    @Provides
+    @Singleton
+    fun provideStoryDao(storyDatabase: StoryDatabase) = storyDatabase.storyDao()
+
+    @Provides
+    @Singleton
+    fun provideRemoteKeysDao(storyDatabase: StoryDatabase) = storyDatabase.remoteKeysDao()
+
 }

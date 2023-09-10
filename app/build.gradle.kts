@@ -40,6 +40,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
 }
 
@@ -87,6 +88,12 @@ object DependencyVersion {
 
     // Splash Screen
     const val cameraVersion = "1.2.3"
+
+    // Room Database
+    const val roomVersion = "2.4.0-rc01"
+
+    // Paging 3 Support
+    const val pagingVersion = "3.1.0"
 }
 
 dependencies {
@@ -140,4 +147,12 @@ dependencies {
     implementation("androidx.camera:camera-camera2:${DependencyVersion.cameraVersion}")
     implementation("androidx.camera:camera-lifecycle:${DependencyVersion.cameraVersion}")
     implementation("androidx.camera:camera-view:${DependencyVersion.cameraVersion}")
+
+    // Room Database
+    implementation("androidx.room:room-ktx:${DependencyVersion.roomVersion}")
+    kapt("androidx.room:room-compiler:${DependencyVersion.roomVersion}")
+
+    // Paging 3 Support
+    implementation("androidx.paging:paging-runtime-ktx:${DependencyVersion.pagingVersion}")
+    implementation("androidx.room:room-paging:${DependencyVersion.roomVersion}")
 }
