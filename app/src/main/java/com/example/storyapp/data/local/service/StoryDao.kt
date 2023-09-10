@@ -1,5 +1,6 @@
 package com.example.storyapp.data.local.service
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -17,4 +18,7 @@ interface StoryDao {
 
     @Query("DELETE FROM stories")
     suspend fun deleteAllStory()
+
+    @Query("SELECT * FROM stories WHERE lat IS NOT NULL AND lon IS NOT NULL")
+    fun getAllStoryWithLocation(): LiveData<List<StoryEntity>>
 }

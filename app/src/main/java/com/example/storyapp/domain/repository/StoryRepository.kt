@@ -20,6 +20,8 @@ interface StoryRepository {
         token: String, image: MultipartBody.Part, caption: RequestBody, latitude: Float?, longitude: Float?
     ): LiveData<Results<Boolean>>
 
+    fun getAllStoryWithLocation(): LiveData<List<StoryEntity>>
+
     suspend fun saveLoginData(user: User)
 
     suspend fun clearLoginData()

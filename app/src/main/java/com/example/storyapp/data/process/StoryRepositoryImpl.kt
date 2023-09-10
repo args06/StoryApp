@@ -61,19 +61,6 @@ class StoryRepositoryImpl @Inject constructor(
         }
     }
 
-//    override fun getStories(token: String): LiveData<Results<List<StoryEntity>>> = liveData {
-//        emit(Results.Loading)
-//        try {
-//            val response = apiService.getStories(token)
-//            if (response.listStory != null) {
-//                val listStory = Mapping.storyMapping(response.listStory)
-//                emit(Results.Success(listStory))
-//            }
-//        } catch (e: Exception) {
-//            emit(Results.Error((e as HttpException).code().toString()))
-//        }
-//    }
-
     override fun getStories(token: String): LiveData<PagingData<StoryEntity>> {
         @OptIn(ExperimentalPagingApi::class) return Pager(config = PagingConfig(
             pageSize = 5
@@ -102,6 +89,9 @@ class StoryRepositoryImpl @Inject constructor(
             else emit(Results.Error(e.message.toString()))
         }
     }
+
+    override fun getAllStoryWithLocation(): LiveData<List<StoryEntity>> =
+        storyDatabase.storyDao().getAllStoryWithLocation()
 
     override fun getUserSessionData(): LiveData<User> {
         return pref.getUserSessionData().asLiveData()

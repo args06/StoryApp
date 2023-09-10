@@ -8,6 +8,12 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.storyapp.data.local.entity.StoryEntity
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -88,5 +94,25 @@ object Helper {
         } while (streamLength > MAXIMAL_SIZE)
         bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
         return file
+    }
+
+    private fun getLatLngFormat(lat: Double?, lon: Double?) = LatLng(lat ?: 0.0, lon ?: 0.0)
+
+    fun placeMarkerOnMap(mMap: GoogleMap, storyData: List<StoryEntity>) {
+        val builder = LatLngBounds.Builder()
+        storyData.forEach { storyItem ->
+            val position = getLatLngFormat(
+                storyItem.lat, storyItem.lon
+            )
+            builder.include(position)
+            val markerOptions = MarkerOptions().position(position)
+            val name = storyItem.name
+            val createdAt = convertDateTime(storyItem.createdAt)
+            markerOptions.title(name)
+            markerOptions.snippet(createdAt)
+            mMap.addMarker(markerOptions)
+        }
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 300))
     }
 }
