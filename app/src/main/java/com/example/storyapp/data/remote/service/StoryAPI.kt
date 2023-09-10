@@ -20,7 +20,7 @@ interface StoryAPI {
     suspend fun loginProcess(
         @Field("email") email: String,
         @Field("password") password: String
-    ) : AuthResponse
+    ): AuthResponse
 
     @FormUrlEncoded
     @POST("register")
@@ -28,12 +28,12 @@ interface StoryAPI {
         @Field("name") name: String,
         @Field("email") email: String,
         @Field("password") password: String
-    ) : AuthResponse
+    ): AuthResponse
 
     @GET("stories?size=${Constant.MAX_RESPONSE_SIZE}")
     suspend fun getStories(
         @Header("Authorization") auth: String
-    ) : RetrieveResponse
+    ): RetrieveResponse
 
     @Multipart
     @POST("stories")
@@ -41,5 +41,5 @@ interface StoryAPI {
         @Header("Authorization") auth: String,
         @Part file: MultipartBody.Part,
         @Part("description") caption: RequestBody,
-    ) : AuthResponse
+    ): AuthResponse
 }

@@ -14,32 +14,33 @@
             android:id="@+id/tv_username_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/username_dummy"
+            android:layout_margin="@dimen/space_8dp"
+            android:textSize="@dimen/text_16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textSize="@dimen/text_16sp"
-            android:layout_margin="@dimen/space_8dp"/>
+            tools:text="@string/username_dummy" />
 
         <ImageView
             android:id="@+id/iv_story_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_username_top"
             tools:src="@tools:sample/avatars"
-            app:layout_constraintTop_toBottomOf="@+id/tv_username_top" />
+            android:contentDescription="@string/image_story" />
 
         <TextView
             android:id="@+id/tv_username"
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/username_dummy"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="@dimen/space_12dp"
             android:textSize="@dimen/text_16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_story_image"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="@dimen/space_12dp"/>
+            tools:text="@string/username_dummy" />
 
         <TextView
             android:id="@+id/tv_caption"
@@ -61,11 +62,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:textColor="@color/gray"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_username"
             app:layout_constraintStart_toEndOf="@+id/tv_username"
             app:layout_constraintTop_toTopOf="@+id/tv_username"
-            tools:text="@string/country_dummy"
-            android:visibility="invisible"/>
+            tools:text="@string/country_dummy" />
 
         <TextView
             android:id="@+id/tv_date"

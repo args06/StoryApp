@@ -1,10 +1,9 @@
 package com.example.storyapp.ui.auth
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -38,11 +37,10 @@ class AuthActivity : AppCompatActivity() {
         viewModel.getLoginStatus().observe(this) { hasLogin ->
             if (hasLogin != null) {
                 viewModel.splashScreenLoading = false
-                if (hasLogin){
+                if (hasLogin) {
                     startActivity(
                         Intent(
-                            this,
-                            MainActivity::class.java
+                            this, MainActivity::class.java
                         )
                     )
                     finish()
@@ -53,7 +51,8 @@ class AuthActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.topAppBar)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_auth) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_auth) as NavHostFragment
         navController = navHostFragment.findNavController()
 
         checkTheme()

@@ -5,11 +5,10 @@ import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.storyapp.R
@@ -77,6 +76,7 @@ class LoginFragment : Fragment() {
 
         })
     }
+
     private fun setButtonEnabled() {
         binding.btnLogin.isEnabled = binding.etEmail.isFormValid && binding.etPassword.isFormValid
     }
@@ -115,11 +115,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.ivLoading.visibility = View.VISIBLE
-        } else {
-            binding.ivLoading.visibility = View.GONE
-        }
+        binding.ivLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showSnackBar(message: String) {
@@ -133,17 +129,17 @@ class LoginFragment : Fragment() {
             repeatMode = ObjectAnimator.REVERSE
         }.start()
 
-        val emailEditTextLayout = ObjectAnimator.ofFloat(binding.tilEmail, View.ALPHA, 1f).setDuration(500)
-        val passwordEditTextLayout = ObjectAnimator.ofFloat(binding.tilPassword, View.ALPHA, 1f).setDuration(500)
+        val emailEditTextLayout =
+            ObjectAnimator.ofFloat(binding.tilEmail, View.ALPHA, 1f).setDuration(500)
+        val passwordEditTextLayout =
+            ObjectAnimator.ofFloat(binding.tilPassword, View.ALPHA, 1f).setDuration(500)
         val loginButton = ObjectAnimator.ofFloat(binding.btnLogin, View.ALPHA, 1f).setDuration(500)
-        val registerButton = ObjectAnimator.ofFloat(binding.llRegister, View.ALPHA, 1f).setDuration(500)
+        val registerButton =
+            ObjectAnimator.ofFloat(binding.llRegister, View.ALPHA, 1f).setDuration(500)
 
         AnimatorSet().apply {
             playSequentially(
-                emailEditTextLayout,
-                passwordEditTextLayout,
-                loginButton,
-                registerButton
+                emailEditTextLayout, passwordEditTextLayout, loginButton, registerButton
             )
             startDelay = 500
         }.start()

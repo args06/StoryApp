@@ -63,17 +63,18 @@ class StoryRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun uploadImage(token: String, image: MultipartBody.Part, caption: RequestBody) = liveData {
-        emit(Results.Loading)
-        try {
-            val response = apiService.uploadImage(token, image, caption)
-            val registerStatus = Mapping.authStatus(response)
-            emit(Results.Success(registerStatus.isError))
+    override fun uploadImage(token: String, image: MultipartBody.Part, caption: RequestBody) =
+        liveData {
+            emit(Results.Loading)
+            try {
+                val response = apiService.uploadImage(token, image, caption)
+                val registerStatus = Mapping.authStatus(response)
+                emit(Results.Success(registerStatus.isError))
 
-        } catch (e: Exception) {
-            emit(Results.Error((e as HttpException).code().toString()))
+            } catch (e: Exception) {
+                emit(Results.Error((e as HttpException).code().toString()))
+            }
         }
-    }
 
     override fun getUserSessionData(): LiveData<User> {
         return pref.getUserSessionData().asLiveData()

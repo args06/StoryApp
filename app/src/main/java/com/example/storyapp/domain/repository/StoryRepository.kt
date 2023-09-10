@@ -15,7 +15,9 @@ interface StoryRepository {
 
     fun getStories(token: String): LiveData<Results<List<Story>>>
 
-    fun uploadImage(token: String, image: MultipartBody.Part, caption: RequestBody): LiveData<Results<Boolean>>
+    fun uploadImage(
+        token: String, image: MultipartBody.Part, caption: RequestBody
+    ): LiveData<Results<Boolean>>
 
     suspend fun saveLoginData(user: User)
 

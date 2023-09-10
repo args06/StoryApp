@@ -9,7 +9,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val repository: StoryRepository
-): ViewModel() {
+) : ViewModel() {
 
     fun getUserSessionData() = repository.getUserSessionData()
 

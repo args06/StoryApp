@@ -9,21 +9,21 @@
         android:id="@+id/dashboardFragment"
         android:name="com.example.storyapp.ui.dashboard.DashboardFragment"
         android:label="@string/dashboard"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/action_dashboardFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"/>
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_dashboardFragment_to_insertFragment"
             app:destination="@id/insertFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"/>
+            app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_dashboardFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -32,20 +32,20 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.storyapp.ui.settings.SettingsFragment"
         android:label="@string/menu_setting"
-        tools:layout="@layout/fragment_settings" >
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_authActivity"
             app:destination="@id/authActivity"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@android:anim/slide_in_left"
-            app:popExitAnim="@android:anim/slide_out_right"/>
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/insertFragment"
         android:name="com.example.storyapp.ui.insert.InsertFragment"
         android:label="@string/add_story"
-        tools:layout="@layout/fragment_insert"/>
+        tools:layout="@layout/fragment_insert" />
     <activity
         android:id="@+id/authActivity"
         android:name="com.example.storyapp.ui.auth.AuthActivity"
@@ -55,7 +55,7 @@
         android:id="@+id/detailFragment"
         android:name="com.example.storyapp.ui.detail.DetailFragment"
         android:label="@string/story_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="story_item"
             app:argType="com.example.storyapp.domain.model.Story" />

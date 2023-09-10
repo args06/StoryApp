@@ -1,10 +1,10 @@
 package com.example.storyapp.ui.dashboard
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -85,11 +85,7 @@ class DashboardFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.ivLoading.visibility = View.VISIBLE
-        } else {
-            binding.ivLoading.visibility = View.GONE
-        }
+        binding.ivLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.ivNoData.visibility = View.GONE
     }
 

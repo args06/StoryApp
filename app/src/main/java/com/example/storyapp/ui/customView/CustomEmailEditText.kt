@@ -10,7 +10,7 @@ import com.example.storyapp.R
 import com.example.storyapp.utils.FormValidation
 import com.google.android.material.textfield.TextInputEditText
 
-class CustomEmailEditText: TextInputEditText{
+class CustomEmailEditText : TextInputEditText {
 
     private var isEmailNotValid = false
     private var isEmailBlank = false
@@ -20,10 +20,14 @@ class CustomEmailEditText: TextInputEditText{
     constructor(context: Context) : super(context) {
         init()
     }
+
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init()
     }
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context, attrs, defStyleAttr
+    ) {
         init()
     }
 
@@ -37,7 +41,7 @@ class CustomEmailEditText: TextInputEditText{
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val email = s.toString().trim()
-                if (email.isNotEmpty()){
+                if (email.isNotEmpty()) {
                     isEmailNotValid = !FormValidation.isEmailValid(email)
                     isEmailBlank = false
                 } else {
@@ -47,13 +51,11 @@ class CustomEmailEditText: TextInputEditText{
 
                 isFormValid = !isEmailNotValid && !isEmailBlank
 
-                error = if (isEmailNotValid)
-                    context.getString(R.string.incorrect_email_format)
-                else if (isEmailBlank)
-                    context.getString(R.string.form_empty_message)
-                else
-                    null
+                error = if (isEmailNotValid) context.getString(R.string.incorrect_email_format)
+                else if (isEmailBlank) context.getString(R.string.form_empty_message)
+                else null
             }
+
             override fun afterTextChanged(s: Editable) {}
         })
     }

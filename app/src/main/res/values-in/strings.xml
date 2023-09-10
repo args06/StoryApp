@@ -33,4 +33,6 @@
     <string name="add_story">Tambahkan Cerita</string>
     <string name="story_detail">Detail Cerita</string>
     <string name="incorrect_password_length">Kata sandi minimal harus terdiri dari 8 karakter!</string>
+    <string name="image_story">Gambar pada Cerita</string>
+    <string name="images_preview">Pratinjau Gambar</string>
 </resources>

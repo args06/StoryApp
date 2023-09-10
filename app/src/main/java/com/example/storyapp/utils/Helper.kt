@@ -20,13 +20,13 @@ import java.util.Locale
 object Helper {
 
     private val timeStamp: String = SimpleDateFormat(
-        "dd-MMM-yyyy",
-        Locale.US
+        "dd-MMM-yyyy", Locale.US
     ).format(System.currentTimeMillis())
 
     fun convertDateTime(item: String): String {
-        val parser =  SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-        val formatter = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, Locale.getDefault() )
+        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val formatter =
+            DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, Locale.getDefault())
         val formattedDate = parser.parse(item)?.let { formatter.format(it) }
         return formattedDate.toString()
     }
@@ -39,7 +39,7 @@ object Helper {
         }
     }
 
-    fun constructAuthToken(token: String) : String = "Bearer $token"
+    fun constructAuthToken(token: String): String = "Bearer $token"
 
     fun createTempFile(context: Context): File {
         val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)

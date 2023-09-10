@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val repository: StoryRepository
-): ViewModel() {
+) : ViewModel() {
 
     fun clearLoginData() {
         viewModelScope.launch {

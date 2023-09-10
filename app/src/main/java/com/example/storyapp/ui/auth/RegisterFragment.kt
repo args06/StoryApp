@@ -5,10 +5,10 @@ import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.storyapp.R
@@ -119,11 +119,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.ivLoading.visibility = View.VISIBLE
-        } else {
-            binding.ivLoading.visibility = View.GONE
-        }
+        binding.ivLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showSnackBar(message: String) {

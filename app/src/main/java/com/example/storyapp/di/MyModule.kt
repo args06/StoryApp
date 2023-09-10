@@ -83,8 +83,7 @@ object MyModule {
     @Provides
     @Singleton
     fun provideRepository(
-        storyAPI: StoryAPI,
-        pref: AppPreferences
+        storyAPI: StoryAPI, pref: AppPreferences
     ): StoryRepository {
         return StoryRepositoryImpl(storyAPI, pref)
     }

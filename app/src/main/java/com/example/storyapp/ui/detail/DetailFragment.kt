@@ -1,10 +1,10 @@
 package com.example.storyapp.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.storyapp.databinding.FragmentDetailBinding
 import com.example.storyapp.domain.model.Story
@@ -20,8 +20,7 @@ class DetailFragment : Fragment() {
     private lateinit var storyItem: Story
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -39,5 +38,10 @@ class DetailFragment : Fragment() {
             tvCaption.text = storyItem.description
             tvDate.text = Helper.convertDateTime(storyItem.createdAt)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

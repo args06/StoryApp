@@ -14,7 +14,7 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/menu_item"/>
+            app:menu="@menu/menu_item" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:defaultNavHost="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:navGraph="@navigation/main_navigation"
-        app:popUpToInclusive="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:popUpToInclusive="true" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

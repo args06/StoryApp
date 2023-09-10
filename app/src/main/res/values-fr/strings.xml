@@ -33,4 +33,6 @@
     <string name="add_story">Ajouter un article</string>
     <string name="story_detail">Détail de l\'histoire</string>
     <string name="incorrect_password_length">Le mot de passe doit comporter au moins 8 caractères!</string>
+    <string name="image_story">Images sur l\'histoire</string>
+    <string name="images_preview">Aperçu des images</string>
 </resources>
