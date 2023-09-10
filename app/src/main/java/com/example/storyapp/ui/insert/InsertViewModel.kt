@@ -15,6 +15,13 @@ class InsertViewModel @Inject constructor(
 
     fun getUserSessionData() = repository.getUserSessionData()
 
-    fun uploadImage(token: String, image: MultipartBody.Part, caption: RequestBody) =
-        repository.uploadImage(Helper.constructAuthToken(token), image, caption)
+    fun uploadImage(
+        token: String,
+        image: MultipartBody.Part,
+        caption: RequestBody,
+        latitude: Float?,
+        longitude: Float?
+    ) = repository.uploadImage(
+        Helper.constructAuthToken(token), image, caption, latitude, longitude
+    )
 }

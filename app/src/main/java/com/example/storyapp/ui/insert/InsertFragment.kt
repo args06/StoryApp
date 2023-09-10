@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -23,6 +25,8 @@ import com.example.storyapp.data.Results
 import com.example.storyapp.databinding.FragmentInsertBinding
 import com.example.storyapp.utils.Helper
 import com.example.storyapp.utils.Helper.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
@@ -41,9 +45,13 @@ class InsertFragment : Fragment() {
     private var getFile: File? = null
     private lateinit var currentPhotoPath: String
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private var currentLatitude: Float? = null
+    private var currentLongitude: Float? = null
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentInsertBinding.inflate(inflater, container, false)
         return binding.root
@@ -52,15 +60,17 @@ class InsertFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (!allPermissionsGranted()) {
-            ActivityCompat.requestPermissions(
-                requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
-            )
-        }
+        checkPermission()
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         binding.btnCamera.setOnClickListener { startTakePhoto() }
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnUpload.setOnClickListener { getSessionData() }
+        binding.switchLocation.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            if (isChecked)
+                getMyLocation()
+        }
     }
 
     private val launcherIntentGallery = registerForActivityResult(
@@ -91,8 +101,7 @@ class InsertFragment : Fragment() {
 
     private fun getSessionData() {
         viewModel.getUserSessionData().observe(viewLifecycleOwner) { userData ->
-            if (userData != null)
-                uploadImage(userData.token)
+            if (userData != null) uploadImage(userData.token)
         }
     }
 
@@ -121,35 +130,37 @@ class InsertFragment : Fragment() {
     private fun uploadImage(token: String) {
         if (getFile != null) {
             val reducedFile = Helper.reduceFileImage(getFile as File)
-            val caption = binding.etCaption.text.toString().trimEnd().toRequestBody("text/plain".toMediaType())
+            val caption = binding.etCaption.text.toString().trimEnd()
+                .toRequestBody("text/plain".toMediaType())
 
             val requestImageFile = reducedFile.asRequestBody("image/jpeg".toMediaType())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "photo", reducedFile.name, requestImageFile
             )
 
-            viewModel.uploadImage(token, imageMultipart, caption).observe(viewLifecycleOwner) { result ->
-                if (result != null) {
-                    when(result) {
-                        is Results.Loading -> {
-                            showLoading(true)
-                        }
-
-                        is Results.Success -> {
-                            showLoading(false)
-                            val uploadStatus = result.data
-                            if (!uploadStatus) {
-                                findNavController().popBackStack()
+            viewModel.uploadImage(token, imageMultipart, caption, currentLatitude, currentLongitude)
+                .observe(viewLifecycleOwner) { result ->
+                    if (result != null) {
+                        when (result) {
+                            is Results.Loading -> {
+                                showLoading(true)
                             }
-                        }
 
-                        is Results.Error -> {
-                            showLoading(false)
-                            showSnackBar(result.error)
+                            is Results.Success -> {
+                                showLoading(false)
+                                val uploadStatus = result.data
+                                if (!uploadStatus) {
+                                    findNavController().popBackStack()
+                                }
+                            }
+
+                            is Results.Error -> {
+                                showLoading(false)
+                                showSnackBar(result.error)
+                            }
                         }
                     }
                 }
-            }
         }
     }
 
@@ -165,8 +176,34 @@ class InsertFragment : Fragment() {
         Snackbar.make(binding.scrollLayout, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(requireActivity().baseContext, it) == PackageManager.PERMISSION_GRANTED
+    private fun checkEachPermission(permissions: Array<String>): Boolean {
+        return permissions.all {
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                it
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    private fun checkPermission() {
+        if(!checkEachPermission(REQUIRED_PERMISSIONS)){
+            ActivityCompat.requestPermissions(
+                requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
+        }
+    }
+
+    private fun getMyLocation() {
+        checkPermission()
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                currentLatitude = location.latitude.toFloat()
+                currentLongitude = location.longitude.toFloat()
+            } else {
+                showSnackBar(getString(R.string.location_not_found))
+                binding.switchLocation.isChecked = false
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -175,7 +212,11 @@ class InsertFragment : Fragment() {
     }
 
     companion object {
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
 

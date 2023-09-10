@@ -7,7 +7,6 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.storyapp.databinding.ItemLoadingBinding
-import com.google.android.material.snackbar.Snackbar
 
 class LoadingStateAdapter(private val retry: () -> Unit, private val onErrorCallback: (String) -> Unit) :
     LoadStateAdapter<LoadingStateAdapter.LoadingStateViewHolder>() {

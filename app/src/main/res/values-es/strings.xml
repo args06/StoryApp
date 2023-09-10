@@ -37,4 +37,6 @@
     <string name="images_preview">Avance de imágenes</string>
     <string name="menu_maps">Mapas</string>
     <string name="retry">Reintentar</string>
+    <string name="location_not_found">No se ha encontrado la ubicación. Inténtelo de nuevo.</string>
+    <string name="include_current_location">¿Incluye su ubicación actual?</string>
 </resources>

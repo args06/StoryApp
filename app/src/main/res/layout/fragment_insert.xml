@@ -25,9 +25,9 @@
                 android:id="@+id/iv_preview"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_300dp"
+                android:contentDescription="@string/images_preview"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_place_holder"
-                android:contentDescription="@string/images_preview" />
+                app:srcCompat="@drawable/ic_place_holder" />
 
         </androidx.cardview.widget.CardView>
 
@@ -81,6 +81,27 @@
                 android:scrollbars="vertical" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_28dp"
+            android:layout_marginEnd="@dimen/space_12dp"
+            android:text="@string/include_current_location"
+            android:textSize="@dimen/text_18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/switch_location"
+            app:layout_constraintEnd_toStartOf="@+id/switch_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/switch_location" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
         <Button
             android:id="@+id/btn_upload"
             android:layout_width="@dimen/space_0dp"
@@ -90,7 +111,7 @@
             android:text="@string/upload"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/switch_location" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/iv_loading"

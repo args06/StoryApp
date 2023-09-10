@@ -44,5 +44,7 @@ interface StoryAPI {
         @Header("Authorization") auth: String,
         @Part file: MultipartBody.Part,
         @Part("description") caption: RequestBody,
+        @Part("lat") latitude: Float?,
+        @Part("lon") longitude: Float?
     ): AuthResponse
 }

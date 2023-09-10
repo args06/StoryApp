@@ -42,10 +42,8 @@ class StoryRepositoryImpl @Inject constructor(
                     emit(Results.Success(true))
                 }
             } catch (e: Exception) {
-                if (e is HttpException)
-                    emit(Results.Error(e.code().toString()))
-                else
-                    emit(Results.Error(e.message.toString()))
+                if (e is HttpException) emit(Results.Error(e.code().toString()))
+                else emit(Results.Error(e.message.toString()))
             }
         }
 
@@ -58,7 +56,8 @@ class StoryRepositoryImpl @Inject constructor(
             val registerStatus = Mapping.authStatus(response)
             emit(Results.Success(registerStatus.isError))
         } catch (e: Exception) {
-            emit(Results.Error((e as HttpException).code().toString()))
+            if (e is HttpException) emit(Results.Error(e.code().toString()))
+            else emit(Results.Error(e.message.toString()))
         }
     }
 
@@ -85,18 +84,24 @@ class StoryRepositoryImpl @Inject constructor(
         }).liveData
     }
 
-    override fun uploadImage(token: String, image: MultipartBody.Part, caption: RequestBody) =
-        liveData {
-            emit(Results.Loading)
-            try {
-                val response = apiService.uploadImage(token, image, caption)
-                val registerStatus = Mapping.authStatus(response)
-                emit(Results.Success(registerStatus.isError))
+    override fun uploadImage(
+        token: String,
+        image: MultipartBody.Part,
+        caption: RequestBody,
+        latitude: Float?,
+        longitude: Float?
+    ) = liveData {
+        emit(Results.Loading)
+        try {
+            val response = apiService.uploadImage(token, image, caption, latitude, longitude)
+            val registerStatus = Mapping.authStatus(response)
+            emit(Results.Success(registerStatus.isError))
 
-            } catch (e: Exception) {
-                emit(Results.Error((e as HttpException).code().toString()))
-            }
+        } catch (e: Exception) {
+            if (e is HttpException) emit(Results.Error(e.code().toString()))
+            else emit(Results.Error(e.message.toString()))
         }
+    }
 
     override fun getUserSessionData(): LiveData<User> {
         return pref.getUserSessionData().asLiveData()

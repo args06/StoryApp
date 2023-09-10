@@ -94,6 +94,9 @@ object DependencyVersion {
 
     // Paging 3 Support
     const val pagingVersion = "3.1.0"
+
+    // Google Maps Support
+    const val googleMapsVersion = "18.0.0"
 }
 
 dependencies {
@@ -155,4 +158,8 @@ dependencies {
     // Paging 3 Support
     implementation("androidx.paging:paging-runtime-ktx:${DependencyVersion.pagingVersion}")
     implementation("androidx.room:room-paging:${DependencyVersion.roomVersion}")
+
+    // Google Maps Support
+    implementation("com.google.android.gms:play-services-maps:${DependencyVersion.googleMapsVersion}")
+    implementation("com.google.android.gms:play-services-location:${DependencyVersion.googleMapsVersion}")
 }
