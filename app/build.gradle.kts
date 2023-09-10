@@ -46,7 +46,7 @@ object DependencyVersion {
     // Core
     const val coreVersion = "1.10.1"
     const val appcompatVersion = "1.6.1"
-    const val lifecycleVersion = "2.6.1"
+    const val lifecycleVersion = "2.6.2"
     const val activityVersion = "1.7.2"
     const val fragmentVersion = "1.6.1"
 
