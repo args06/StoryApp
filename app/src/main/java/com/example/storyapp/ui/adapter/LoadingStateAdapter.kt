@@ -7,8 +7,10 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.storyapp.databinding.ItemLoadingBinding
+import com.google.android.material.snackbar.Snackbar
 
-class LoadingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<LoadingStateAdapter.LoadingStateViewHolder>(){
+class LoadingStateAdapter(private val retry: () -> Unit, private val onErrorCallback: (String) -> Unit) :
+    LoadStateAdapter<LoadingStateAdapter.LoadingStateViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup, loadState: LoadState
@@ -19,7 +21,12 @@ class LoadingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Load
 
     override fun onBindViewHolder(holder: LoadingStateViewHolder, loadState: LoadState) {
         holder.bind(loadState)
+
+        if (loadState is LoadState.Error) {
+            onErrorCallback(loadState.error.localizedMessage)
+        }
     }
+
     class LoadingStateViewHolder(private val binding: ItemLoadingBinding, retry: () -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         init {
@@ -27,12 +34,8 @@ class LoadingStateAdapter(private val retry: () -> Unit) : LoadStateAdapter<Load
         }
 
         fun bind(loadState: LoadState) {
-            if (loadState is LoadState.Error) {
-                binding.errorMsg.text = loadState.error.localizedMessage
-            }
             binding.ivLoading.isVisible = loadState is LoadState.Loading
             binding.retryButton.isVisible = loadState is LoadState.Error
-            binding.errorMsg.isVisible = loadState is LoadState.Error
         }
     }
 }

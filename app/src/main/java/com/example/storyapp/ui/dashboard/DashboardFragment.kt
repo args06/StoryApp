@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.storyapp.R
 import com.example.storyapp.databinding.FragmentDashboardBinding
@@ -63,9 +64,14 @@ class DashboardFragment : Fragment() {
         binding.rvStoryList.apply {
             layoutManager = StaggeredGridLayoutManager(1, 1)
             adapter = storyAdapter.withLoadStateFooter(
-                footer = LoadingStateAdapter {
-                    storyAdapter.retry()
-                }
+                footer = LoadingStateAdapter(
+                    retry = {
+                        storyAdapter.retry()
+                    },
+                    onErrorCallback = { errorMessage ->
+                        showSnackBar(errorMessage)
+                    }
+                )
             )
             setHasFixedSize(true)
         }
@@ -74,6 +80,10 @@ class DashboardFragment : Fragment() {
     private fun showNoData(isNoData: Boolean) {
         binding.ivNoData.visibility = if (isNoData) View.VISIBLE else View.GONE
         binding.rvStoryList.visibility = if (isNoData) View.GONE else View.VISIBLE
+    }
+
+    private fun showSnackBar(message: String) {
+        Snackbar.make(binding.constraintLayout, message, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

@@ -42,7 +42,10 @@ class StoryRepositoryImpl @Inject constructor(
                     emit(Results.Success(true))
                 }
             } catch (e: Exception) {
-                emit(Results.Error((e as HttpException).code().toString()))
+                if (e is HttpException)
+                    emit(Results.Error(e.code().toString()))
+                else
+                    emit(Results.Error(e.message.toString()))
             }
         }
 
