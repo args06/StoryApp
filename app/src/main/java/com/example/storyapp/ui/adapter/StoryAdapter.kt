@@ -40,6 +40,12 @@ class StoryAdapter : PagingDataAdapter<StoryEntity, StoryAdapter.ViewHolder>(DIF
                 tvDate.text = Helper.convertDateTime(storyEntityItem.createdAt)
                 tvCaption.text = storyEntityItem.description
 
+                if (storyEntityItem.lat != null && storyEntityItem.lon != null) {
+                    tvCountry.text = Helper.getCityName(
+                        itemView.context, storyEntityItem.lat, storyEntityItem.lon
+                    )
+                }
+
                 tvCaption.post {
                     val lineCount = tvCaption.lineCount
                     if (lineCount < Constant.CAPTION_MAX_LINE) {
@@ -72,19 +78,20 @@ class StoryAdapter : PagingDataAdapter<StoryEntity, StoryAdapter.ViewHolder>(DIF
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<StoryEntity> = object : DiffUtil.ItemCallback<StoryEntity>() {
-            override fun areItemsTheSame(
-                oldItem: StoryEntity, newItem: StoryEntity
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<StoryEntity> =
+            object : DiffUtil.ItemCallback<StoryEntity>() {
+                override fun areItemsTheSame(
+                    oldItem: StoryEntity, newItem: StoryEntity
+                ): Boolean {
+                    return oldItem.id == newItem.id
+                }
 
-            @SuppressLint("DiffUtilEquals")
-            override fun areContentsTheSame(
-                oldItem: StoryEntity, newItem: StoryEntity
-            ): Boolean {
-                return oldItem == newItem
+                @SuppressLint("DiffUtilEquals")
+                override fun areContentsTheSame(
+                    oldItem: StoryEntity, newItem: StoryEntity
+                ): Boolean {
+                    return oldItem == newItem
+                }
             }
-        }
     }
 }

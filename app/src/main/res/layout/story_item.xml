@@ -65,13 +65,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_caption" />
 
             <TextView
-                android:id="@+id/country"
+                android:id="@+id/tv_country"
                 style="@style/TextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:textColor="@color/gray"
-                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_username"
                 app:layout_constraintStart_toEndOf="@+id/tv_username"
                 app:layout_constraintTop_toTopOf="@+id/tv_username"
@@ -97,7 +96,7 @@
                 app:cardCornerRadius="@dimen/space_100dp"
                 app:cardElevation="@dimen/space_0dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_username"
-                app:layout_constraintEnd_toStartOf="@+id/country"
+                app:layout_constraintEnd_toStartOf="@+id/tv_country"
                 app:layout_constraintStart_toEndOf="@+id/tv_username"
                 app:layout_constraintTop_toTopOf="@+id/tv_username" />
 

@@ -5,7 +5,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.location.Geocoder
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.storyapp.data.local.entity.StoryEntity
@@ -17,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.text.DateFormat
@@ -115,4 +118,16 @@ object Helper {
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 300))
     }
+
+    fun getCityName(context: Context, lat: Double, lon: Double): String {
+        var cityName: String?
+        val geoCoder = Geocoder(context, Locale.getDefault())
+        val address = geoCoder.getFromLocation(lat,lon,1)
+        cityName = address?.get(0)?.subAdminArea
+        if (cityName == null){
+            cityName = address?.get(0)?.adminArea
+        }
+        return cityName.toString()
+    }
+
 }
