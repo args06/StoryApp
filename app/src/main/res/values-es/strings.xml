@@ -35,4 +35,5 @@
     <string name="incorrect_password_length">La contraseña debe tener al menos 8 caracteres!</string>
     <string name="image_story">Imágenes de la historia</string>
     <string name="images_preview">Avance de imágenes</string>
+    <string name="menu_maps">Mapas</string>
 </resources>

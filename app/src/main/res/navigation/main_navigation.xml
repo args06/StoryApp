@@ -60,4 +60,9 @@
             android:name="story_item"
             app:argType="com.example.storyapp.domain.model.Story" />
     </fragment>
+    <activity
+        android:id="@+id/mapsNavigation"
+        android:name="com.example.storyapp.ui.maps.MapsActivity"
+        android:label="@string/menu_maps"
+        tools:layout="@layout/activity_maps" />
 </navigation>

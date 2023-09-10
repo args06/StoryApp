@@ -5,6 +5,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -116,6 +117,7 @@ dependencies {
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:${DependencyVersion.dataStoreVersion}")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
 
     // Unit Testing
     testImplementation("junit:junit:${DependencyVersion.junitVersion}")
