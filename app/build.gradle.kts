@@ -69,6 +69,13 @@ object DependencyVersion {
 
     // Unit Testing
     const val junitVersion = "4.13.2"
+    const val mockitoVersion = "3.12.4"
+
+    // InstantTaskExecutorRule
+    const val instantTaskExecutorRuleVersion = "2.1.0"
+
+    // TestDispatcher
+    const val testDispatcherVersion = "1.6.0"
 
     // Integration Testing
     const val espressoVersion = "3.5.1"
@@ -131,6 +138,14 @@ dependencies {
 
     // Unit Testing
     testImplementation("junit:junit:${DependencyVersion.junitVersion}")
+    testImplementation("org.mockito:mockito-core:${DependencyVersion.mockitoVersion}")
+    testImplementation("org.mockito:mockito-inline:${DependencyVersion.mockitoVersion}")
+
+    // InstantTaskExecutorRule
+    testImplementation("androidx.arch.core:core-testing:${DependencyVersion.instantTaskExecutorRuleVersion}")
+
+    // TestDispatcher
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${DependencyVersion.testDispatcherVersion}")
 
     // Integration Testing
     androidTestImplementation("androidx.test.espresso:espresso-core:${DependencyVersion.espressoVersion}")
