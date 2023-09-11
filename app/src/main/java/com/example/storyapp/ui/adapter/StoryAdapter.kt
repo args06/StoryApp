@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.storyapp.R
-import com.example.storyapp.databinding.StoryItemBinding
 import com.example.storyapp.data.local.entity.StoryEntity
+import com.example.storyapp.databinding.StoryItemBinding
 import com.example.storyapp.ui.dashboard.DashboardFragmentDirections
 import com.example.storyapp.utils.Constant
 import com.example.storyapp.utils.Helper

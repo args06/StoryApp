@@ -2,7 +2,6 @@ package com.example.storyapp.ui.maps
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.example.storyapp.data.local.entity.StoryEntity
 import com.example.storyapp.domain.repository.StoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

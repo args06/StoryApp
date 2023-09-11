@@ -4,9 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.example.storyapp.data.Results
 import com.example.storyapp.domain.repository.StoryRepository
-import com.example.storyapp.ui.dashboard.DashboardViewModel
-import com.example.storyapp.utils.DataDummy
-import com.example.storyapp.utils.Helper
 import com.example.storyapp.utils.LiveDataTestUtil.getOrAwaitValue
 import com.example.storyapp.utils.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,7 +16,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -47,7 +43,7 @@ class InsertViewModelTest {
 
     @Test
     fun `when success add Story`() {
-        val dummyToken = Helper.constructAuthToken("testToken")
+        val dummyToken = "testToken"
 
         val dummyFile = File("file.jpg")
         val requestImageFile = dummyFile.asRequestBody("image/jpeg".toMediaType())
@@ -64,8 +60,11 @@ class InsertViewModelTest {
         val expectedResult = MutableLiveData<Results<Boolean>>()
         expectedResult.value = dataDummy
 
-        Mockito.`when`(insertViewModel.uploadImage(dummyToken, dummyImage, dummyCaption, dummyLocation, dummyLocation))
-            .thenReturn(expectedResult)
+        Mockito.`when`(
+            insertViewModel.uploadImage(
+                dummyToken, dummyImage, dummyCaption, dummyLocation, dummyLocation
+            )
+        ).thenReturn(expectedResult)
 
         val actualResult: Results<Boolean> = insertViewModel.uploadImage(
             dummyToken, dummyImage, dummyCaption, dummyLocation, dummyLocation

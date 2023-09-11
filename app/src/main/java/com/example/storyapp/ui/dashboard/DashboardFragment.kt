@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.storyapp.R
 import com.example.storyapp.databinding.FragmentDashboardBinding
@@ -54,25 +53,19 @@ class DashboardFragment : Fragment() {
         }
 
         storyAdapter.addLoadStateListener { loadState ->
-            if (loadState.append.endOfPaginationReached)
-                if (storyAdapter.itemCount < 1)
-                    showNoData(true)
-                else
-                    showNoData(false)
+            if (loadState.append.endOfPaginationReached) if (storyAdapter.itemCount < 1) showNoData(
+                true
+            )
+            else showNoData(false)
         }
 
         binding.rvStoryList.apply {
             layoutManager = StaggeredGridLayoutManager(1, 1)
-            adapter = storyAdapter.withLoadStateFooter(
-                footer = LoadingStateAdapter(
-                    retry = {
-                        storyAdapter.retry()
-                    },
-                    onErrorCallback = { errorMessage ->
-                        showSnackBar(errorMessage)
-                    }
-                )
-            )
+            adapter = storyAdapter.withLoadStateFooter(footer = LoadingStateAdapter(retry = {
+                storyAdapter.retry()
+            }, onErrorCallback = { errorMessage ->
+                showSnackBar(errorMessage)
+            }))
             setHasFixedSize(true)
         }
     }

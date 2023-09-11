@@ -17,7 +17,11 @@ interface StoryRepository {
     fun getStories(token: String): LiveData<PagingData<StoryEntity>>
 
     fun uploadImage(
-        token: String, image: MultipartBody.Part, caption: RequestBody, latitude: Float?, longitude: Float?
+        token: String,
+        image: MultipartBody.Part,
+        caption: RequestBody,
+        latitude: Float?,
+        longitude: Float?
     ): LiveData<Results<Boolean>>
 
     fun getAllStoryWithLocation(): LiveData<List<StoryEntity>>

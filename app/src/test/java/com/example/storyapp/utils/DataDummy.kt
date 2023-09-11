@@ -1,7 +1,5 @@
 package com.example.storyapp.utils
 
-import androidx.lifecycle.LiveData
-import com.example.storyapp.data.Results
 import com.example.storyapp.data.local.entity.StoryEntity
 
 object DataDummy {
@@ -10,13 +8,7 @@ object DataDummy {
         val items: MutableList<StoryEntity> = arrayListOf()
         for (i in 0..100) {
             val quote = StoryEntity(
-                i.toString(),
-                "name + $i",
-                "desc $i",
-                "photo $i",
-                "createAt $i",
-                121.0,
-                124.0
+                i.toString(), "name + $i", "desc $i", "photo $i", "createAt $i", 121.0, 124.0
             )
             items.add(quote)
         }

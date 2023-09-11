@@ -1,6 +1,5 @@
 package com.example.storyapp.utils
 
-import androidx.annotation.Nullable
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

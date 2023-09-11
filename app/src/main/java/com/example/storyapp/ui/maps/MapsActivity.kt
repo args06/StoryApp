@@ -1,19 +1,14 @@
 package com.example.storyapp.ui.maps
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.example.storyapp.R
-import com.example.storyapp.data.local.entity.StoryEntity
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.example.storyapp.databinding.ActivityMapsBinding
+import com.example.storyapp.utils.Helper
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.example.storyapp.databinding.ActivityMapsBinding
-import com.example.storyapp.utils.Helper
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,8 +33,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             finish()
         }
 
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
 

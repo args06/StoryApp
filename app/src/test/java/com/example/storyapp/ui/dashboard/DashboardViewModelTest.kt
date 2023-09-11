@@ -2,10 +2,8 @@ package com.example.storyapp.ui.dashboard
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.example.storyapp.data.local.entity.StoryEntity
 import com.example.storyapp.domain.repository.StoryRepository
@@ -17,7 +15,6 @@ import com.example.storyapp.utils.MainDispatcherRule
 import com.example.storyapp.utils.StoryPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
@@ -61,7 +58,8 @@ class DashboardViewModelTest {
             dashboardViewModel.getStories(dummyToken)
         ).thenReturn(expectedStory)
 
-        val actualStory: PagingData<StoryEntity> = dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
+        val actualStory: PagingData<StoryEntity> =
+            dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,
@@ -83,7 +81,8 @@ class DashboardViewModelTest {
         expectedStory.value = data
         Mockito.`when`(dashboardViewModel.getStories(dummyToken)).thenReturn(expectedStory)
 
-        val actualStory: PagingData<StoryEntity> = dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
+        val actualStory: PagingData<StoryEntity> =
+            dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,
             updateCallback = noopListUpdateCallback,

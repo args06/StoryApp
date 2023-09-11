@@ -6,7 +6,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.storyapp.data.local.entity.StoryEntity
 
-class StoryPagingSource: PagingSource<Int, LiveData<List<StoryEntity>>>() {
+class StoryPagingSource : PagingSource<Int, LiveData<List<StoryEntity>>>() {
     override fun getRefreshKey(state: PagingState<Int, LiveData<List<StoryEntity>>>): Int? {
         return 0
     }

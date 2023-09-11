@@ -8,7 +8,6 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.storyapp.R
@@ -68,8 +68,7 @@ class InsertFragment : Fragment() {
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.btnUpload.setOnClickListener { getSessionData() }
         binding.switchLocation.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            if (isChecked)
-                getMyLocation()
+            if (isChecked) getMyLocation()
         }
     }
 
@@ -179,14 +178,13 @@ class InsertFragment : Fragment() {
     private fun checkEachPermission(permissions: Array<String>): Boolean {
         return permissions.all {
             ContextCompat.checkSelfPermission(
-                requireActivity(),
-                it
+                requireActivity(), it
             ) == PackageManager.PERMISSION_GRANTED
         }
     }
 
     private fun checkPermission() {
-        if(!checkEachPermission(REQUIRED_PERMISSIONS)){
+        if (!checkEachPermission(REQUIRED_PERMISSIONS)) {
             ActivityCompat.requestPermissions(
                 requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.example.storyapp.databinding.FragmentDetailBinding
 import com.example.storyapp.data.local.entity.StoryEntity
+import com.example.storyapp.databinding.FragmentDetailBinding
 import com.example.storyapp.utils.Helper
 import dagger.hilt.android.AndroidEntryPoint
 

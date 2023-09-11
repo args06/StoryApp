@@ -9,10 +9,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.example.storyapp.data.Results
-import com.example.storyapp.data.preferences.AppPreferences
-import com.example.storyapp.data.remote.service.StoryAPI
 import com.example.storyapp.data.local.entity.StoryEntity
 import com.example.storyapp.data.local.service.StoryDatabase
+import com.example.storyapp.data.preferences.AppPreferences
+import com.example.storyapp.data.remote.service.StoryAPI
 import com.example.storyapp.domain.model.User
 import com.example.storyapp.domain.repository.StoryRepository
 import com.example.storyapp.utils.Mapping
