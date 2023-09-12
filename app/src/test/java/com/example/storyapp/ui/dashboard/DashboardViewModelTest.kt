@@ -15,6 +15,7 @@ import com.example.storyapp.utils.MainDispatcherRule
 import com.example.storyapp.utils.StoryPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
@@ -40,7 +41,7 @@ class DashboardViewModelTest {
 
     private lateinit var dashboardViewModel: DashboardViewModel
 
-    private val dummyToken = Helper.constructAuthToken("testToken")
+    private val dummyToken = Helper.constructAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXJiR2FRSlBTRXUyNzhnbzciLCJpYXQiOjE2OTQ0NjQ2MjJ9.2Q25e62fkAXRMJ8D7Un09lGamql_Gd56Oo2Mu4CM0Ko")
 
     @Before
     fun setUp() {
@@ -55,17 +56,17 @@ class DashboardViewModelTest {
         expectedStory.value = data
 
         Mockito.`when`(
-            dashboardViewModel.getStories(dummyToken)
+            storyRepository.getStories(dummyToken)
         ).thenReturn(expectedStory)
 
-        val actualStory: PagingData<StoryEntity> =
-            dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
+        val actualStory: PagingData<StoryEntity> = dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,
             updateCallback = noopListUpdateCallback,
             workerDispatcher = Dispatchers.Main,
         )
+
         differ.submitData(actualStory)
 
         assertNotNull(differ.snapshot())

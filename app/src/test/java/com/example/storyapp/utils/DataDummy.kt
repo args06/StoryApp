@@ -6,11 +6,11 @@ object DataDummy {
 
     fun generateDummyStoryResponse(): List<StoryEntity> {
         val items: MutableList<StoryEntity> = arrayListOf()
-        for (i in 0..100) {
-            val quote = StoryEntity(
+        for (i in 0..50) {
+            val story = StoryEntity(
                 i.toString(), "name + $i", "desc $i", "photo $i", "createAt $i", 121.0, 124.0
             )
-            items.add(quote)
+            items.add(story)
         }
         return items
     }
