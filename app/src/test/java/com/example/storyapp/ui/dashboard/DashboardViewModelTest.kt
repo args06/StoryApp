@@ -6,24 +6,20 @@ import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.example.storyapp.data.local.entity.StoryEntity
-import com.example.storyapp.data.process.StoryRepositoryImpl
 import com.example.storyapp.domain.repository.StoryRepository
 import com.example.storyapp.ui.adapter.StoryAdapter
 import com.example.storyapp.utils.DataDummy
-import com.example.storyapp.utils.Helper
 import com.example.storyapp.utils.LiveDataTestUtil.getOrAwaitValue
 import com.example.storyapp.utils.MainDispatcherRule
 import com.example.storyapp.utils.StoryPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -61,7 +57,8 @@ class DashboardViewModelTest {
             storyRepository.getStories(Mockito.anyString())
         ).thenReturn(expectedStory)
 
-        val actualStory: PagingData<StoryEntity> = dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
+        val actualStory: PagingData<StoryEntity> =
+            dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,
@@ -85,7 +82,8 @@ class DashboardViewModelTest {
 
         Mockito.`when`(storyRepository.getStories(Mockito.anyString())).thenReturn(expectedStory)
 
-        val actualStory: PagingData<StoryEntity> = dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
+        val actualStory: PagingData<StoryEntity> =
+            dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,

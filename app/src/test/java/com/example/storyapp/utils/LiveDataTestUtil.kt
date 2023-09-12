@@ -35,17 +35,6 @@ object LiveDataTestUtil {
             this.removeObserver(observer)
         }
 
-        @Suppress("UNCHECKED_CAST")
-        return data as T
-    }
-
-    suspend fun <T> LiveData<T>.observeForTesting(block: suspend  () -> Unit) {
-        val observer = Observer<T> { }
-        try {
-            observeForever(observer)
-            block()
-        } finally {
-            removeObserver(observer)
-        }
+        @Suppress("UNCHECKED_CAST") return data as T
     }
 }
