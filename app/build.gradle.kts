@@ -134,7 +134,7 @@ dependencies {
 
     // Preferences DataStore
     implementation("androidx.datastore:datastore-preferences:${DependencyVersion.dataStoreVersion}")
-    implementation("com.google.android.gms:play-services-maps:18.1.0")
+
 
     // Unit Testing
     testImplementation("junit:junit:${DependencyVersion.junitVersion}")
@@ -177,4 +177,5 @@ dependencies {
     // Google Maps Support
     implementation("com.google.android.gms:play-services-maps:${DependencyVersion.googleMapsVersion}")
     implementation("com.google.android.gms:play-services-location:${DependencyVersion.googleMapsVersion}")
+    implementation("com.google.android.gms:play-services-maps:${DependencyVersion.googleMapsVersion}")
 }

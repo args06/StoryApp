@@ -3,8 +3,6 @@ package com.example.storyapp.utils
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.liveData
-import androidx.paging.PagingData
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -17,8 +15,8 @@ object LiveDataTestUtil {
         var data: T? = null
         val latch = CountDownLatch(1)
         val observer = object : Observer<T> {
-            override fun onChanged(o: T) {
-                data = o
+            override fun onChanged(value: T) {
+                data = value
                 latch.countDown()
                 this@getOrAwaitValue.removeObserver(this)
             }

@@ -23,6 +23,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.eq
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
@@ -42,7 +43,7 @@ class DashboardViewModelTest {
 
     private lateinit var dashboardViewModel: DashboardViewModel
 
-    private val dummyToken = Helper.constructAuthToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLXJiR2FRSlBTRXUyNzhnbzciLCJpYXQiOjE2OTQ0NjQ2MjJ9.2Q25e62fkAXRMJ8D7Un09lGamql_Gd56Oo2Mu4CM0Ko")
+    private val dummyToken = "Bearer testToken"
 
     @Before
     fun setUp() {
@@ -57,7 +58,7 @@ class DashboardViewModelTest {
         expectedStory.value = data
 
         Mockito.`when`(
-            storyRepository.getStories(dummyToken)
+            storyRepository.getStories(Mockito.anyString())
         ).thenReturn(expectedStory)
 
         val actualStory: PagingData<StoryEntity> = dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
@@ -81,10 +82,11 @@ class DashboardViewModelTest {
 
         val expectedStory = MutableLiveData<PagingData<StoryEntity>>()
         expectedStory.value = data
-        Mockito.`when`(dashboardViewModel.getStories(dummyToken)).thenReturn(expectedStory)
 
-        val actualStory: PagingData<StoryEntity> =
-            dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
+        Mockito.`when`(storyRepository.getStories(Mockito.anyString())).thenReturn(expectedStory)
+
+        val actualStory: PagingData<StoryEntity> = dashboardViewModel.getStories(dummyToken).getOrAwaitValue()
+
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoryAdapter.DIFF_CALLBACK,
             updateCallback = noopListUpdateCallback,
