@@ -38,6 +38,11 @@ interface StoryAPI {
         @Query("size") size: Int
     ): RetrieveResponse
 
+    @GET("stories?size=${Constant.MAX_RESPONSE_SIZE}&location=1")
+    suspend fun getStoriesWithLocation(
+        @Header("Authorization") auth: String
+    ): RetrieveResponse
+
     @Multipart
     @POST("stories")
     suspend fun uploadImage(

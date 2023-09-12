@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.storyapp.R
+import com.example.storyapp.data.Results
 import com.example.storyapp.databinding.ActivityMapsBinding
 import com.example.storyapp.utils.Helper
 import com.google.android.gms.maps.GoogleMap
@@ -42,14 +43,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isZoomControlsEnabled = true
 
         checkTheme()
-        getStoryLocation()
+
+        getSessionData()
     }
 
-    private fun getStoryLocation() {
-        viewModel.getAllStoryWithLocation().observe(this) { storyData ->
-            if (storyData.isNotEmpty()) {
-                mMap.clear()
-                Helper.placeMarkerOnMap(mMap, storyData)
+    private fun getSessionData() {
+        viewModel.getUserSessionData().observe(this) { userData ->
+            if (userData != null) getStoryLocation(userData.token)
+        }
+    }
+
+    private fun getStoryLocation(token: String) {
+        viewModel.getAllStoryWithLocation(token).observe(this) { storyData ->
+            if (storyData != null) {
+                when (storyData) {
+                    is Results.Success -> {
+                        mMap.clear()
+                        Helper.placeMarkerOnMap(mMap, storyData.data)
+                    }
+
+                    else -> {}
+                }
             }
         }
     }

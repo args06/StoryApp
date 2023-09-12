@@ -1,10 +1,10 @@
 package com.example.storyapp.utils
 
+import com.example.storyapp.data.local.entity.StoryEntity
 import com.example.storyapp.data.remote.response.AuthResponse
 import com.example.storyapp.data.remote.response.ListStoryItem
 import com.example.storyapp.data.remote.response.LoginResult
 import com.example.storyapp.domain.model.AuthStatus
-import com.example.storyapp.data.local.entity.StoryEntity
 import com.example.storyapp.domain.model.User
 
 object Mapping {

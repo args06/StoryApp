@@ -24,7 +24,7 @@ interface StoryRepository {
         longitude: Float?
     ): LiveData<Results<Boolean>>
 
-    fun getAllStoryWithLocation(): LiveData<List<StoryEntity>>
+    fun getAllStoryWithLocation(token: String): LiveData<Results<List<StoryEntity>>>
 
     suspend fun saveLoginData(user: User)
 

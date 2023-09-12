@@ -90,8 +90,20 @@ class StoryRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getAllStoryWithLocation(): LiveData<List<StoryEntity>> =
-        storyDatabase.storyDao().getAllStoryWithLocation()
+    override fun getAllStoryWithLocation(token: String): LiveData<Results<List<StoryEntity>>> =
+        liveData {
+            emit(Results.Loading)
+            try {
+                val response = apiService.getStoriesWithLocation(token).listStory
+                if (response != null) {
+                    val listLocationStory = Mapping.storyMapping(response)
+                    emit(Results.Success(listLocationStory))
+                }
+            } catch (e: Exception) {
+                if (e is HttpException) emit(Results.Error(e.code().toString()))
+                else emit(Results.Error(e.message.toString()))
+            }
+        }
 
     override fun getUserSessionData(): LiveData<User> {
         return pref.getUserSessionData().asLiveData()

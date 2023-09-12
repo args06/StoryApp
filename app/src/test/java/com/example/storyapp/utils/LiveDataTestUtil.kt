@@ -3,6 +3,8 @@ package com.example.storyapp.utils
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.liveData
+import androidx.paging.PagingData
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -35,7 +37,8 @@ object LiveDataTestUtil {
             this.removeObserver(observer)
         }
 
-        @Suppress("UNCHECKED_CAST") return data as T
+        @Suppress("UNCHECKED_CAST")
+        return data as T
     }
 
     suspend fun <T> LiveData<T>.observeForTesting(block: suspend  () -> Unit) {

@@ -6,6 +6,7 @@ import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.ListUpdateCallback
 import com.example.storyapp.data.local.entity.StoryEntity
+import com.example.storyapp.data.process.StoryRepositoryImpl
 import com.example.storyapp.domain.repository.StoryRepository
 import com.example.storyapp.ui.adapter.StoryAdapter
 import com.example.storyapp.utils.DataDummy
@@ -93,7 +94,7 @@ class DashboardViewModelTest {
         assertEquals(0, differ.snapshot().size)
     }
 
-    val noopListUpdateCallback = object : ListUpdateCallback {
+    private val noopListUpdateCallback = object : ListUpdateCallback {
         override fun onInserted(position: Int, count: Int) {}
         override fun onRemoved(position: Int, count: Int) {}
         override fun onMoved(fromPosition: Int, toPosition: Int) {}

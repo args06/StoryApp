@@ -18,7 +18,4 @@ interface StoryDao {
 
     @Query("DELETE FROM stories")
     suspend fun deleteAllStory()
-
-    @Query("SELECT * FROM stories WHERE lat IS NOT NULL AND lon IS NOT NULL")
-    fun getAllStoryWithLocation(): LiveData<List<StoryEntity>>
 }

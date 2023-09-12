@@ -3,6 +3,7 @@ package com.example.storyapp.ui.maps
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.storyapp.domain.repository.StoryRepository
+import com.example.storyapp.utils.Helper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -15,5 +16,8 @@ class MapsViewModel @Inject constructor(
         return repository.getThemeSettings()
     }
 
-    fun getAllStoryWithLocation() = repository.getAllStoryWithLocation()
+    fun getUserSessionData() = repository.getUserSessionData()
+
+    fun getAllStoryWithLocation(token: String) =
+        repository.getAllStoryWithLocation(Helper.constructAuthToken(token))
 }
